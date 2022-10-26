@@ -24,14 +24,14 @@ const formErrorTemplate = {
   department: false
 }
 
-const defaultBirthdateOptions = {
+const bdOptions = {
   startYear: 1920,
   stopYear: 2022,
   defaultYear: { label: '1980', value: '1980' },
   defaultMonth: { label: 'January', value: '0' }
 }
 
-const defaultStartdateOptions = {
+const startOptions = {
   startYear: 1990,
   stopYear: 2022,
   defaultYear: { label: '2022', value: '2022' },
@@ -55,4 +55,4 @@ const defaultDate = (): IDateOption => {
   }
 }
 
-export { formDataTemplate, formErrorTemplate, defaultBirthdateOptions, defaultStartdateOptions, defaultDate, formatDateToString }
+export { formDataTemplate, formErrorTemplate, bdOptions, startOptions, defaultDate, formatDateToString }

@@ -8,12 +8,12 @@ const Home = (): JSX.Element => {
   <div className='home'>
     <h1>Bienvenue sur HRnet</h1>
     <NavLink className='home-link' to='/create'>
-    <img className='home-icon' src={addUserIcon} alt='Créer un profil employé' />
-    <span>Créer un profil</span>
+      <img className='home-icon' src={addUserIcon} alt='Créer un profil employé' />
+      <span>Créer un profil</span>
     </NavLink>
     <NavLink className='home-link' to='/employees'>
-    <img className='home-icon' src={usersIcon} alt='Consulter tous les profils' />
-    <span>Consulter les profils</span>
+      <img className='home-icon' src={usersIcon} alt='Consulter tous les profils' />
+      <span>Consulter les profils</span>
     </NavLink>
   </div>
   )
