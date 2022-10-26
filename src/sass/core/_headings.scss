@@ -1,0 +1,18 @@
+@use '../abstract/' as a;
+
+h1 {
+  width: 100%;
+  text-align: center;
+  font-size: 32px;
+  font-weight: 700;
+  color: a.$clr-green;
+  margin: 20px 0;
+}
+
+h2 {
+  width: 100%;
+  text-align: center;
+  font-size: 24px;
+  font-weight: 700;
+  color: a.$clr-dgrey;
+}

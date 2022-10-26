@@ -1,0 +1,82 @@
+@use '../abstract/' as a;
+
+.datepicker {
+  position: relative;
+  background-color: a.$clr-grey;
+}
+
+.datepicker-panel {
+  display: none;
+
+  &--focused {
+    display: block;
+    background-color: a.$clr-grey;
+    border: 1px solid a.$clr-dgrey;
+    padding: 5px;
+    border-radius: 5px;
+    position: absolute;
+    z-index: 1;
+  }
+}
+
+.datepicker-weekdays {
+  display: grid;
+  grid-template-columns: repeat(7, 1fr);
+}
+
+.cell {
+  border: none;
+  border: 1px solid a.$clr-dgrey;
+  width: 40px;
+  height: 30px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: white;
+  cursor: pointer;
+}
+
+.cell.date {
+  &:hover {
+    background-color: a.$clr-green;
+    color: white;
+  }
+}
+
+.today {
+  background-color: a.$clr-blue;
+  color: white;
+  font-weight: 700;
+}
+
+.date-picker__dates {
+  display: grid;
+  grid-template-columns: repeat(7, 1fr);
+}
+
+.previous-month-date {
+  background-color: a.$clr-grey;
+  color: a.$clr-dgrey;
+}
+
+.next-month-date {
+  background-color: a.$clr-grey;
+  color: a.$clr-dgrey;
+}
+
+.datepicker-options {
+  display: flex;
+  justify-content: space-evenly;
+  align-items: center;
+  & > img {
+    height: 10px;
+    width: 10px;
+  }
+}
+
+.date-nav {
+  border: none;
+  background: none;
+  cursor: pointer;
+}
+

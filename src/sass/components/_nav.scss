@@ -1,0 +1,25 @@
+@use '../abstract/' as a;
+
+.nav {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 5px 0;
+  background-color: a.$clr-grey;
+}
+
+.home-navlink {
+  text-decoration: none;
+  color: a.$clr-green;
+  font-weight: 700;
+  font-size: 30px;
+}
+
+.nav-icon {
+  height: 30px;
+  width: 30px;
+  margin: 0 10px;
+  background-color: a.$clr-green;
+  padding: 5px;
+  border-radius: 5px;
+}

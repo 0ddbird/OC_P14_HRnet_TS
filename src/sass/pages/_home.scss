@@ -1,0 +1,36 @@
+@use '../abstract/' as a;
+
+.home {
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
+  align-items: center;
+  height: 100%;
+  width: 100%;
+}
+
+.home-link {
+  display: flex;
+  justify-content: space-evenly;
+  align-items: center;
+  flex-direction: column;
+  background-color: a.$clr-grey;
+  margin: 5px;
+  border-radius: 10px;
+  text-decoration: none;
+  background-color: a.$clr-green;
+  color: white;
+  font-weight: 700;
+  font-size: 24px;
+  padding: 20px 20px;
+}
+
+.home-icon {
+  height: 50px;
+  width: 50px;
+}
+
+.home-navlink {
+  display: flex;
+  align-items: center;
+}
