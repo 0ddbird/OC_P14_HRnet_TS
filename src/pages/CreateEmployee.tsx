@@ -1,47 +1,53 @@
-import React, { useContext, useEffect, useState } from 'react'
+import React, { useContext, useState } from 'react'
 import { AppContext } from '../App'
 // Components
-import DatePicker, { IDatePickerOption } from '../components/datepicker/DatePicker'
-import Modal from '../components/Modal'
-import Select from 'react-controlled-select'
-import Uploader from '../components/jsonUploader/Uploader'
+import DatePicker from 'react-ts-datepicker'
+import Modal from 'react-ts-simple-modal'
+import Select from 'react-ts-controlled-select'
 // Mocks
 import { states } from '../mocks/states'
 // Utils
 import { formDataTemplate, formErrorTemplate, defaultBirthdateOptions, defaultStartdateOptions, defaultDate, formatDateToString } from '../utils/createEmployee'
-import { IOption } from '../components/Select'
-import { ITableItem } from '../components/table/Table'
+import { IDateOption } from 'react-ts-datepicker/interfaces'
+import { IOption } from 'react-ts-controlled-select/Select'
+
+interface IFormData {
+  [key: string]: string
+}
+
+interface IFormError {
+  [key: string]: boolean
+}
 
 const CreateEmployee = (): JSX.Element => {
   const departments = [
     {
-      name: 'Sales',
+      label: 'Sales',
       value: 'sales'
     },
     {
-      name: 'Marketing',
+      label: 'Marketing',
       value: 'marketing'
     },
     {
-      name: 'Engineering',
+      label: 'Engineering',
       value: 'engineering'
     },
     {
-      name: 'Human Resources',
+      label: 'Human Resources',
       value: 'hr'
     },
     {
-      name: 'Legal',
+      label: 'Legal',
       value: 'legal'
     }
   ]
 
   const { employees, setEmployees } = useContext(AppContext)! // eslint-disable-line
-  const [selectedBirthdate, setSelectedBirthDate] = useState<IDatePickerOption>(defaultDate())
-  const [selectedStartDate, setSelectedStartDate] = useState<IDatePickerOption>(defaultDate())
-  const [formData, setFormData] = useState(formDataTemplate)
-  const [formErrors, setFormErrors] = useState(formErrorTemplate)
-  const [file, setFile] = useState(undefined)
+  const [selectedBirthdate, setSelectedBirthDate] = useState<IDateOption>(defaultDate())
+  const [selectedStartDate, setSelectedStartDate] = useState<IDateOption>(defaultDate())
+  const [formData, setFormData] = useState<IFormData>(formDataTemplate)
+  const [formErrors, setFormErrors] = useState<IFormError>(formErrorTemplate)
   const [modalDisplayed, setModalDisplayed] = useState(false)
   const [selectedState, setSelectedState] = useState<IOption>(states[0])
   const [selectedDepartment, setSelectedDepartment] = useState<IOption>(departments[0])
@@ -49,7 +55,7 @@ const CreateEmployee = (): JSX.Element => {
 
   function handleInputChange (e: React.FocusEvent<HTMLInputElement, Element>): void {
     if (e.target.value.length > 1) {
-      const newFormData = formData
+      const newFormData = { ...formData }
       newFormData[`${e.target.id}`] = e.target.value
       setFormData(newFormData)
     } else {
@@ -61,10 +67,10 @@ const CreateEmployee = (): JSX.Element => {
 
   function setLocalFormObject (): void {
     const newFormData = formData
-    newFormData.birthdate = selectedBirthdate
-    newFormData.startdate = selectedStartDate
-    newFormData.state = selectedState
-    newFormData.department = selectedDepartment
+    newFormData.birthdate = formatDateToString(selectedBirthdate.value)
+    newFormData.startdate = formatDateToString(selectedStartDate.value)
+    newFormData.state = selectedState.value
+    newFormData.department = selectedDepartment.value
     setFormData(newFormData)
   }
 
@@ -72,34 +78,24 @@ const CreateEmployee = (): JSX.Element => {
     e.preventDefault()
     setLocalFormObject()
     setModalDisplayed(true)
-    const currentEmployees = [...employees]
-    currentEmployees.push(formatEmployee(formData))
+    const currentEmployees = new Map(employees)
+    currentEmployees.set(`${currentEmployees.size}`, formatEmployee(formData))
     setEmployees(currentEmployees)
   }
 
-  function formatEmployee (employeeData): ITableItem {
+  function formatEmployee (employeeData: IFormData): { [key: string]: string } {
     return {
       firstName: employeeData.firstname,
       lastName: employeeData.lastname,
-      startDate: formatDateToString(employeeData.startdate.value),
-      department: employeeData.department.name,
-      birthDate: formatDateToString(employeeData.birthdate.value),
+      startDate: employeeData.startdate,
+      department: employeeData.department,
+      birthDate: employeeData.birthdate,
       street: employeeData.street,
       city: employeeData.city,
-      state: employeeData.state.value,
+      state: employeeData.state,
       zipCode: employeeData.zipcode
     }
   }
-
-  function importEmployees (file): void {
-    const currentEmployees = [...employees]
-    file.forEach(employee => { currentEmployees.push(employee) })
-    setEmployees(currentEmployees)
-  }
-
-  useEffect(() => {
-    if (file != null) importEmployees(file)
-  }, [file])
 
   return (
   <>
@@ -155,6 +151,7 @@ const CreateEmployee = (): JSX.Element => {
 
         <label htmlFor='department'>Department</label>
         {<Select
+        id='department'
         options={departments}
         selected={selectedDepartment}
         setSelected={setSelectedDepartment}
@@ -165,17 +162,11 @@ const CreateEmployee = (): JSX.Element => {
         </div>
 
       </form>
-      {
-      <Uploader setFile={setFile}/>
-      }
-    </div>
 
-    {<Modal
-    title={modalPayload.title}
-    content={modalPayload.content}
-    modalDisplayed={modalDisplayed}
-    setModalDisplayed={setModalDisplayed}
-    />}
+      {/* <Uploader setFile={setFile}/> */}
+
+    </div>
+    {<Modal title={modalPayload.title} content={modalPayload.content} modalDisplayed={modalDisplayed} setModalDisplayed={setModalDisplayed} /> }
   </>
   )
 }

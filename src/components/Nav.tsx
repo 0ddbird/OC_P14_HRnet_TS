@@ -4,7 +4,7 @@ import HandShakeIcon from '../assets/handshake.svg'
 import addUserIcon from '../assets/adduser.svg'
 import usersIcon from '../assets/users.svg'
 
-const Nav = () => {
+const Nav = (): JSX.Element => {
   return (
     <div className='nav'>
       <NavLink className='home-navlink' to='/'><img className='nav-icon' src={HandShakeIcon} alt='back to home' /> HRnet </NavLink>

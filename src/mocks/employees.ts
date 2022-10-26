@@ -37,51 +37,51 @@ const headingsMock = [
   }
 ]
 
-const employeesMock = [
-  {
-    firstName: 'Albert',
-    lastName: 'Dupont',
-    startDate: '2022-09-06',
-    department: 'Marketing',
-    birthDate: '1990-09-06',
-    street: '12, Baker Street',
-    city: 'London',
-    state: 'AK',
-    zipCode: '123ABC'
-  },
-  {
-    firstName: 'Bob',
-    lastName: 'Aupont',
-    startDate: '2022-09-06',
-    department: 'Engineering',
-    birthDate: '1990-09-06',
-    street: '02, Baker Street',
-    city: 'Paris',
-    state: 'NY',
-    zipCode: '465ABC'
-  },
-  {
-    firstName: 'Charly',
-    lastName: 'Bupont',
-    startDate: '2021-02-06',
-    department: 'Marketing',
-    birthDate: '1980-09-06',
-    street: '59, Baker Street',
-    city: 'Sydney',
-    state: 'IO',
-    zipCode: 'ABC896'
-  },
-  {
-    firstName: 'Charly',
-    lastName: 'Bupont',
-    startDate: '2021-02-06',
-    department: 'Marketing',
-    birthDate: '1980-09-06',
-    street: '59, Baker Street',
-    city: 'Sydney',
-    state: 'IO',
-    zipCode: 'ABC896'
-  }
-]
+const employeesMock = new Map()
+
+employeesMock.set('0', {
+  firstName: 'Richard',
+  lastName: 'Hendricks',
+  startDate: '2020-12-01',
+  department: 'Engineering',
+  birthDate: '1985-05-09',
+  street: '12, Baker Street',
+  city: 'London',
+  state: 'AK',
+  zipCode: '123ABC'
+})
+employeesMock.set('1', {
+  firstName: 'Obi',
+  lastName: 'One',
+  startDate: '2019-01-01',
+  department: 'Sales',
+  birthDate: '1975-06-31',
+  street: '02, Baker Street',
+  city: 'Paris',
+  state: 'NY',
+  zipCode: '465ABC'
+})
+employeesMock.set('2', {
+  firstName: 'Obi',
+  lastName: 'Two',
+  startDate: '2010-12-31',
+  department: 'Marketing',
+  birthDate: '2021-07-24',
+  street: '12, space road',
+  city: 'Sydney',
+  state: 'IO',
+  zipCode: 'ABC896'
+})
+employeesMock.set('3', {
+  firstName: 'Sarah',
+  lastName: 'Connor',
+  startDate: '2008-03-15',
+  department: 'Legal',
+  birthDate: '1990-09-19',
+  street: '59, Baker Street',
+  city: 'Sydney',
+  state: 'IO',
+  zipCode: 'ABC896'
+})
 
 export { employeesMock, headingsMock }

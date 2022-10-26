@@ -6,23 +6,26 @@ import EmployeeList from './pages/EmployeeList'
 import Home from './pages/Home'
 import NotFound from './pages/NotFound'
 import Nav from './components/Nav'
-import { ITableHeading, ITableItem } from './components/table/Table'
 // Mocks
 import { employeesMock, headingsMock } from './mocks/employees'
 // Assets
 import './sass/main.scss'
+import { ITableItems } from 'react-ts-table/interfaces'
 
 interface IAppContext {
-  employees: ITableItem[]
-  headings: ITableHeading[]
-  setEmployees: React.Dispatch<React.SetStateAction<ITableItem[]>>
+  employees: ITableItems
+  headings: Array<{
+    name: string
+    value: string
+  }>
+  setEmployees: React.Dispatch<React.SetStateAction<ITableItems>>
 }
 
 export const AppContext = createContext<IAppContext | null>(null)
 
 function App (): JSX.Element {
   const headings = headingsMock
-  const [employees, setEmployees] = useState<ITableItem[]>(employeesMock)
+  const [employees, setEmployees] = useState<ITableItems>(employeesMock)
 
   return (
     <div className="App">

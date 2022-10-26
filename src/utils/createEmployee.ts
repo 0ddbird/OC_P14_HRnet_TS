@@ -1,4 +1,4 @@
-import { IDatePickerOption } from '../components/datepicker/DatePicker'
+import { IDateOption } from 'react-ts-datepicker/interfaces'
 
 const formDataTemplate = {
   firstname: '',
@@ -27,28 +27,30 @@ const formErrorTemplate = {
 const defaultBirthdateOptions = {
   startYear: 1920,
   stopYear: 2022,
-  defaultYear: { name: '1980', value: 1980 },
-  defaultMonth: { name: 'January', value: 0 }
+  defaultYear: { label: '1980', value: '1980' },
+  defaultMonth: { label: 'January', value: '0' }
 }
 
 const defaultStartdateOptions = {
   startYear: 1990,
   stopYear: 2022,
-  defaultYear: { name: '2022', value: 2022 },
-  defaultMonth: { name: 'August', value: 7 }
+  defaultYear: { label: '2022', value: '2022' },
+  defaultMonth: { label: 'August', value: '7' }
 }
 
 function formatDateToString (date: Date): string {
   const isSingleDigitMonth = date.getMonth().toString().length < 2
-  const standardizedMonth = isSingleDigitMonth ? `0${date.getMonth()}` : `${date.getMonth()}`
-  return `${date.getFullYear()}-${standardizedMonth}-${date.getDate()}`
+  const standardizedMonth = isSingleDigitMonth ? `0${date.getMonth() + 1}` : `${date.getMonth() + 1}`
+  const isSingleDigitDate = date.getDate().toString().length < 2
+  const standardizedDate = isSingleDigitDate ? `0${date.getDate()}` : `${date.getDate()}`
+  return `${date.getFullYear()}-${standardizedMonth}-${standardizedDate}`
 }
 
-const defaultDate = (): IDatePickerOption => {
+const defaultDate = (): IDateOption => {
   const date = new Date()
   const dateName = `${date.getFullYear()}-${date.getMonth()}-${date.getDate()}`
   return {
-    name: dateName,
+    label: dateName,
     value: date
   }
 }
