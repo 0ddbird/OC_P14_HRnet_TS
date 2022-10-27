@@ -1,0 +1,11 @@
+{
+  "firstname": "Test",
+  "lastname": "Last Name",
+  "birthdate": "1992-10-13T23:00:00.000Z",
+  "startDate": "2022-10-18T22:00:00.000Z",
+  "department_id": 0,
+  "street": "rue de la Paix",
+  "city": "Paris",
+  "state_id": 0,
+  "zipcode": "75000"
+}

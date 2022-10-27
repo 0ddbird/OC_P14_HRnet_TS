@@ -1,7 +1,7 @@
-import React, { useContext, useState } from 'react'
+import React, { useContext, useState, useEffect } from 'react'
 import { AppContext } from '../App'
 // Components
-import DatePicker from 'react-ts-datepicker'
+import Datepicker from 'react-ts-datepicker'
 import Modal from 'react-ts-simple-modal'
 import Select from 'react-ts-controlled-select'
 // Mocks
@@ -25,7 +25,8 @@ const CreateEmployee = (): JSX.Element => {
   const [modalDisplayed, setModalDisplayed] = useState(false)
   const [selectedState, setSelectedState] = useState<IOption>(states[0])
   const [selectedDepartment, setSelectedDepartment] = useState<IOption>(departments[0])
-
+  const [isDPBirthdateExpanded, setIsDPBirthdateExpanded] = useState(false)
+  const [isDPStartdateExpanded, setIsDPStartdateExpanded] = useState(false)
   function handleInputChange (e: React.FocusEvent<HTMLInputElement, Element>): void {
     if (e.target.value.length < 1) return
     const newFormData = { ...formData }
@@ -49,7 +50,12 @@ const CreateEmployee = (): JSX.Element => {
     const currentEmployees = new Map(employees)
     currentEmployees.set(`${currentEmployees.size}`, formData)
     setEmployees(currentEmployees)
+    // POST
   }
+
+  useEffect(() => {
+    console.log(isDPBirthdateExpanded)
+  }, [isDPBirthdateExpanded])
 
   return (
   <>
@@ -61,9 +67,26 @@ const CreateEmployee = (): JSX.Element => {
         <label htmlFor='lastname'>Last name</label>
         <input id='lastname' type='text' required minLength={2} onBlur={handleInputChange}/>
         <label id='birthdate'>Date of Birth</label>
-        { <DatePicker startYear={bdOptions.startYear} stopYear={bdOptions.stopYear} defaultYear={bdOptions.defaultYear} defaultMonth={bdOptions.defaultMonth} setSelectedDate={setSelectedBirthDate} selectedDate={selectedBirthdate} /> }
+        <Datepicker
+        startYear={bdOptions.startYear}
+        stopYear={bdOptions.stopYear}
+        defaultYear={bdOptions.defaultYear}
+        defaultMonth={bdOptions.defaultMonth}
+        setSelectedDate={setSelectedBirthDate}
+        selectedDate={selectedBirthdate}
+        isExpanded={isDPBirthdateExpanded}
+        setIsExpanded={setIsDPBirthdateExpanded}/>
         <label id='startdate'>Start Date</label>
-        { <DatePicker startYear={startOptions.startYear} stopYear={startOptions.stopYear} defaultYear={startOptions.defaultYear} defaultMonth={startOptions.defaultMonth} setSelectedDate={setSelectedStartDate} selectedDate={selectedStartDate} /> }
+        <Datepicker
+        startYear={startOptions.startYear}
+        stopYear={startOptions.stopYear}
+        defaultYear={startOptions.defaultYear}
+        defaultMonth={startOptions.defaultMonth}
+        setSelectedDate={setSelectedStartDate}
+        selectedDate={selectedStartDate}
+        isExpanded={isDPStartdateExpanded}
+        setIsExpanded={setIsDPStartdateExpanded}
+        />
         <fieldset id='create-employee-form-fieldset'>
           <legend>Adress</legend>
           <label htmlFor='street'>Street</label>
