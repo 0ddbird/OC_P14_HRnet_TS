@@ -21,7 +21,7 @@ const EmployeeList = (): JSX.Element => {
   return (
   <>
     <h1>Current Employees</h1>
-    {(employees != null) && <Table content={{ headers: headings, items: employees }} options={tableOptions}/>}
+    {employees != null ? <Table content={{ headers: headings, items: employees }} options={tableOptions}/> : <div>No data</div>}
   </>
   )
 }

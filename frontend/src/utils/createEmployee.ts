@@ -12,18 +12,6 @@ const formDataTemplate = {
   department: ''
 }
 
-const formErrorTemplate = {
-  firstname: false,
-  lastname: false,
-  birthdate: false,
-  startdate: false,
-  street: false,
-  city: false,
-  state: false,
-  zipcode: false,
-  department: false
-}
-
 const bdOptions = {
   startYear: 1920,
   stopYear: 2022,
@@ -39,7 +27,7 @@ const startOptions = {
 }
 
 function formatDateToString (date: Date): string {
-  const isSingleDigitMonth = date.getMonth().toString().length < 2
+  const isSingleDigitMonth = `${date.getMonth() + 1}`.length < 2
   const standardizedMonth = isSingleDigitMonth ? `0${date.getMonth() + 1}` : `${date.getMonth() + 1}`
   const isSingleDigitDate = date.getDate().toString().length < 2
   const standardizedDate = isSingleDigitDate ? `0${date.getDate()}` : `${date.getDate()}`
@@ -55,4 +43,4 @@ const defaultDate = (): IDateOption => {
   }
 }
 
-export { formDataTemplate, formErrorTemplate, bdOptions, startOptions, defaultDate, formatDateToString }
+export { formDataTemplate, bdOptions, startOptions, defaultDate, formatDateToString }

@@ -1,11 +1,11 @@
 const headingsMock = [
   {
     name: 'First Name',
-    value: 'firstName'
+    value: 'firstname'
   },
   {
     name: 'Last Name',
-    value: 'lastName'
+    value: 'lastname'
   },
   {
     name: 'Start Date',
