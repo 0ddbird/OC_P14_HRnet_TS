@@ -1,4 +1,4 @@
-import React, { useContext, useState, useEffect } from 'react'
+import React, { useContext, useState } from 'react'
 import { AppContext } from '../App'
 // Components
 import Datepicker from 'react-ts-datepicker'
@@ -47,15 +47,13 @@ const CreateEmployee = (): JSX.Element => {
     e.preventDefault()
     setLocalFormObject()
     setModalDisplayed(true)
+    // ------------------- A remplacer par requête POST ------------------- //
+    // Pas de GET des employés après le POST pour respecter la consigne du projet
     const currentEmployees = new Map(employees)
     currentEmployees.set(`${currentEmployees.size}`, formData)
     setEmployees(currentEmployees)
-    // POST
+    // ------------------------------------------------------------------- //
   }
-
-  useEffect(() => {
-    console.log(isDPBirthdateExpanded)
-  }, [isDPBirthdateExpanded])
 
   return (
   <>
@@ -63,9 +61,9 @@ const CreateEmployee = (): JSX.Element => {
       <h1>Create Employee</h1>
       <form id='create-employee-form' onSubmit={handleFormSubmit}>
         <label htmlFor='firstname'>First name</label>
-        <input id='firstname' type='text' required minLength={2} onBlur={handleInputChange}/>
+        <input id='firstname' type='text' required minLength={2} onChange={handleInputChange}/>
         <label htmlFor='lastname'>Last name</label>
-        <input id='lastname' type='text' required minLength={2} onBlur={handleInputChange}/>
+        <input id='lastname' type='text' required minLength={2} onChange={handleInputChange}/>
         <label id='birthdate'>Date of Birth</label>
         <Datepicker
         startYear={bdOptions.startYear}
@@ -90,13 +88,13 @@ const CreateEmployee = (): JSX.Element => {
         <fieldset id='create-employee-form-fieldset'>
           <legend>Adress</legend>
           <label htmlFor='street'>Street</label>
-          <input id='street' type='text'minLength={2} required onBlur={handleInputChange}/>
+          <input id='street' type='text'minLength={2} required onChange={handleInputChange}/>
           <label htmlFor='city'>City</label>
-          <input id='city' type='text'minLength={2} required onBlur={handleInputChange}></input>
+          <input id='city' type='text'minLength={2} required onChange={handleInputChange}></input>
           <label htmlFor='state'>State</label>
           {<Select id='state' options={states} selected={selectedState} setSelected={setSelectedState} />}
           <label htmlFor='zipcode'>Zip Code</label>
-          <input id='zipcode' type='text' minLength={2} required onBlur={handleInputChange}/>
+          <input id='zipcode' type='text' minLength={2} required onChange={handleInputChange}/>
         </fieldset>
         <label htmlFor='department'>Department</label>
         { <Select id='department' options={departments} selected={selectedDepartment} setSelected={setSelectedDepartment} /> }
