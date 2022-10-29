@@ -27,6 +27,7 @@ const CreateEmployee = (): JSX.Element => {
   const [selectedDepartment, setSelectedDepartment] = useState<IOption>(departments[0])
   const [isDPBirthdateExpanded, setIsDPBirthdateExpanded] = useState(false)
   const [isDPStartdateExpanded, setIsDPStartdateExpanded] = useState(false)
+
   function handleInputChange (e: React.FocusEvent<HTMLInputElement, Element>): void {
     if (e.target.value.length < 1) return
     const newFormData = { ...formData }
@@ -47,11 +48,14 @@ const CreateEmployee = (): JSX.Element => {
     e.preventDefault()
     setLocalFormObject()
     setModalDisplayed(true)
+
     // ------------------- A remplacer par requête POST ------------------- //
     // Pas de GET des employés après le POST pour respecter la consigne du projet
-    const currentEmployees = new Map(employees)
-    currentEmployees.set(`${currentEmployees.size}`, formData)
-    setEmployees(currentEmployees)
+
+    employees != null
+      ? setEmployees([...employees, formData])
+      : setEmployees([formData])
+
     // ------------------------------------------------------------------- //
   }
 
@@ -73,7 +77,8 @@ const CreateEmployee = (): JSX.Element => {
         setSelectedDate={setSelectedBirthDate}
         selectedDate={selectedBirthdate}
         isExpanded={isDPBirthdateExpanded}
-        setIsExpanded={setIsDPBirthdateExpanded}/>
+        setIsExpanded={setIsDPBirthdateExpanded}
+        />
         <label id='startdate'>Start Date</label>
         <Datepicker
         startYear={startOptions.startYear}
@@ -92,7 +97,7 @@ const CreateEmployee = (): JSX.Element => {
           <label htmlFor='city'>City</label>
           <input id='city' type='text'minLength={2} required onChange={handleInputChange}></input>
           <label htmlFor='state'>State</label>
-          {<Select id='state' options={states} selected={selectedState} setSelected={setSelectedState} />}
+          { <Select id='state' options={states} selected={selectedState} setSelected={setSelectedState} /> }
           <label htmlFor='zipcode'>Zip Code</label>
           <input id='zipcode' type='text' minLength={2} required onChange={handleInputChange}/>
         </fieldset>
@@ -103,7 +108,7 @@ const CreateEmployee = (): JSX.Element => {
         </div>
       </form>
     </div>
-    {<Modal title={modalPayload.title} content={modalPayload.content} modalDisplayed={modalDisplayed} setModalDisplayed={setModalDisplayed} /> }
+    { <Modal title={modalPayload.title} content={modalPayload.content} modalDisplayed={modalDisplayed} setModalDisplayed={setModalDisplayed} /> }
   </>
   )
 }

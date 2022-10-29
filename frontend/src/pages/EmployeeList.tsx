@@ -3,8 +3,7 @@ import { AppContext } from '../App'
 import Table from 'react-ts-table'
 
 const EmployeeList = (): JSX.Element => {
-  const { employees, headings } = useContext(AppContext)! // eslint-disable-line
-
+  const { employees, accessors } = useContext(AppContext)! // eslint-disable-line
   const tableOptions = {
     searchModule: true,
     paginationModule: true,
@@ -17,12 +16,11 @@ const EmployeeList = (): JSX.Element => {
       { label: '100', value: '100' }
     ]
   }
-
   return (
-  <>
-    <h1>Current Employees</h1>
-    {employees != null ? <Table content={{ headers: headings, items: employees }} options={tableOptions}/> : <div>No data</div>}
-  </>
+    <>
+      <h1>Current Employees</h1>
+      {employees != null ? <Table items={employees} accessors={accessors} options={tableOptions}/> : <div>No data</div>}
+    </>
   )
 }
 

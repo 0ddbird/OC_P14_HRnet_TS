@@ -9,8 +9,8 @@ const Nav = (): JSX.Element => {
     <div className='nav'>
       <NavLink className='home-navlink' to='/'><img className='nav-icon' src={HandShakeIcon} alt='back to home' /> HRnet </NavLink>
       <div className='nav-right-subcontainer'>
-      <NavLink className='create-navlink' to='/create'><img className='nav-icon' src={addUserIcon} alt='Créer un profil employé' /></NavLink>
-      <NavLink className='employees-navlink' to='/employees'><img className='nav-icon' src={usersIcon} alt='Consulter tous les profils' /></NavLink>
+        <NavLink className='create-navlink' to='/create'><img className='nav-icon' src={addUserIcon} alt='Créer un profil employé' /></NavLink>
+        <NavLink className='employees-navlink' to='/employees'><img className='nav-icon' src={usersIcon} alt='Consulter tous les profils' /></NavLink>
       </div>
     </div>
   )

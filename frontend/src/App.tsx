@@ -1,31 +1,30 @@
 import React, { createContext, useEffect, useState } from 'react'
 import { BrowserRouter, Routes, Route } from 'react-router-dom'
-import { headingsMock } from './mocks/employees'
-import { ITableItems } from 'react-ts-table/interfaces'
+import { accessors } from './mocks/employees'
+import { ITableItem } from 'react-ts-table/interfaces'
+import { formatEmployees } from './utils/employeeList'
 import CreateEmployee from './pages/CreateEmployee'
 import EmployeeList from './pages/EmployeeList'
 import NotFound from './pages/NotFound'
 import Nav from './components/Nav'
 import Home from './pages/Home'
-import { formatEmployees } from './utils/employeeList'
 import './sass/main.scss'
 
-interface IHeading {
+interface IAccessor {
   name: string
   value: string
 }
 
 interface IAppContext {
-  employees: ITableItems | undefined
-  headings: IHeading[]
-  setEmployees: React.Dispatch<React.SetStateAction<ITableItems | undefined>>
+  employees: ITableItem[] | undefined
+  accessors: IAccessor[]
+  setEmployees: React.Dispatch<React.SetStateAction<ITableItem[] | undefined>>
 }
 
 export const AppContext = createContext<IAppContext | null>(null)
 
 function App (): JSX.Element {
-  const headings = headingsMock
-  const [employees, setEmployees] = useState<ITableItems | undefined>(undefined)
+  const [employees, setEmployees] = useState<ITableItem[] | undefined>(undefined)
   const [isLoading, setIsLoading] = useState(true)
 
   useEffect(() => {
@@ -42,7 +41,7 @@ function App (): JSX.Element {
     }
     fetch('http://localhost:3001/api/v1/get-employees', fetchParams)
       .then(async res => res.ok ? await res.json() : await Promise.reject(new Error('Request failed')))
-      .then(fetchedEmployees => setEmployees(formatEmployees(fetchedEmployees.body)))
+      .then(res => setEmployees(formatEmployees(res.body)))
       .catch(() => signal.aborted ? console.log('Request aborted') : console.error('Request failed'))
       .finally(() => setIsLoading(false))
     console.log(isLoading)
@@ -50,7 +49,7 @@ function App (): JSX.Element {
   }, [])
   return (
     <div className="App">
-    <AppContext.Provider value={{ headings, employees, setEmployees }}>
+    <AppContext.Provider value={{ employees, accessors, setEmployees }}>
       <BrowserRouter>
         <Nav />
         <Routes>

@@ -17,7 +17,7 @@
     "react-ts-controlled-select": "^2.1.0",
     "react-ts-datepicker": "^0.1.9",
     "react-ts-simple-modal": "^0.1.0",
-    "react-ts-table": "^0.1.4",
+    "react-ts-table": "^0.1.7",
     "web-vitals": "^2.1.4"
   },
   "scripts": {
@@ -45,13 +45,13 @@
     ]
   },
   "devDependencies": {
-    "@typescript-eslint/eslint-plugin": "^5.38.1",
-    "eslint": "^8.24.0",
+    "@typescript-eslint/eslint-plugin": "^5.41.0",
+    "eslint": "^8.26.0",
     "eslint-config-standard-with-typescript": "^23.0.0",
     "eslint-plugin-import": "^2.26.0",
     "eslint-plugin-n": "^15.3.0",
-    "eslint-plugin-promise": "^6.0.1",
-    "eslint-plugin-react": "^7.31.8",
+    "eslint-plugin-promise": "^6.1.1",
+    "eslint-plugin-react": "^7.31.10",
     "sass": "^1.55.0",
     "sass-loader": "^13.0.2",
     "typescript": "^4.8.4",
