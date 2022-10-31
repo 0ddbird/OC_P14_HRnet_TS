@@ -20,7 +20,13 @@
 
 .item_row {
   display: grid;
+  padding: 1ch 0;
+  &.even {
+    background-color: a.$clr-grey;
+  }
 }
+
+
 
 .table-top-options {
   display: flex;

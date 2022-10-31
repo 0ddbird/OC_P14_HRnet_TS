@@ -15,9 +15,9 @@
     "react-router-dom": "^6.4.1",
     "react-scripts": "5.0.1",
     "react-ts-controlled-select": "^2.1.0",
-    "react-ts-datepicker": "^0.1.9",
+    "react-ts-datepicker": "^0.1.12",
     "react-ts-simple-modal": "^0.1.0",
-    "react-ts-table": "^0.1.7",
+    "react-ts-table": "^0.1.26",
     "web-vitals": "^2.1.4"
   },
   "scripts": {

@@ -34,11 +34,10 @@ const employeeController = {
     createEmployee(req, res) {
         return __awaiter(this, void 0, void 0, function* () {
             const response = {};
-            const serviceResponse = yield employeeService_1.default.createEmployee(req.body);
             try {
+                yield employeeService_1.default.createEmployee(req.body);
                 response.status = 200;
                 response.message = 'Successfully created employee';
-                response.body = serviceResponse;
             }
             catch (error) {
                 console.error('Error in employeeController', error);

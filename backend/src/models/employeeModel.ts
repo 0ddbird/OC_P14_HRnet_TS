@@ -4,9 +4,9 @@ export class Employee {
     public lastname: string,
     public birthdate: Date,
     public startdate: Date,
-    public department_id: number,
+    public department: string,
     public street: string,
     public city: string,
-    public state_id: number,
+    public state: string,
     public zipcode: string) {}
 }

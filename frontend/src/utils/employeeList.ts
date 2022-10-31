@@ -2,37 +2,37 @@ import { ITableItem } from 'react-ts-table/interfaces'
 import { formatDateToString } from './createEmployee'
 
 interface fetchedEmployee {
-  id: number
-  firstname: string
-  lastname: string
-  startdate: string
+  employee_id: number
+  employee_firstname: string
+  employee_lastname: string
+  employee_startdate: string
+  employee_department: number
+  employee_birthdate: string
+  employee_street: string
+  employee_city: string
+  employee_zipcode: string
+  employee_state: string
   department_name: string
-  birthdate: string
-  street: string
-  city: string
-  state: string
-  zipcode: string
-  department_id: number
-  state_id: number
+  state_name: string
 }
 
 function formatEmployees (fetchedEmployees: fetchedEmployee[]): ITableItem[] {
   const employees: ITableItem[] = []
-
+  console.log(fetchedEmployees)
   fetchedEmployees.forEach(employee => {
     employees.push({
-      id: employee.id.toString(),
-      firstName: employee.firstname,
-      lastName: employee.lastname,
-      startDate: formatDateToString(new Date(employee.startdate)),
-      departmentId: employee.department_id.toString(),
+      id: employee.employee_id.toString(),
+      firstName: employee.employee_firstname,
+      lastName: employee.employee_lastname,
+      startDate: formatDateToString(new Date(employee.employee_startdate)),
+      departmentId: employee.employee_department.toString(),
       departmentName: employee.department_name,
-      birthDate: formatDateToString(new Date(employee.birthdate)),
-      street: employee.street,
-      city: employee.city,
-      state: employee.state,
-      stateId: employee.state_id.toString(),
-      zipCode: employee.zipcode
+      birthDate: formatDateToString(new Date(employee.employee_birthdate)),
+      street: employee.employee_street,
+      city: employee.employee_city,
+      zipCode: employee.employee_zipcode,
+      state: employee.state_name,
+      stateCode: employee.employee_state
     })
   })
 

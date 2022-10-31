@@ -1,62 +1,75 @@
 import React, { useContext, useState } from 'react'
 import { AppContext } from '../App'
-// Components
 import Datepicker from 'react-ts-datepicker'
 import Modal from 'react-ts-simple-modal'
 import Select from 'react-ts-controlled-select'
-// Mocks
 import { states } from '../mocks/states'
-// Utils
-import { formDataTemplate, bdOptions, startOptions, defaultDate, formatDateToString } from '../utils/createEmployee'
+import { bdOptions, startOptions, defaultDate, formatDateToString } from '../utils/createEmployee'
 import { IDateOption } from 'react-ts-datepicker/interfaces'
 import { IOption } from 'react-ts-controlled-select/Select'
 
-interface IFormData {
+interface IFormObject {
   [key: string]: string
 }
 
 const CreateEmployee = (): JSX.Element => {
-  const departments = [{ label: 'Sales', value: 'sales' }, { label: 'Marketing', value: 'marketing' }, { label: 'Engineering', value: 'engineering' }, { label: 'Human Resources', value: 'hr' }, { label: 'Legal', value: 'legal' }]
+  const departments = [{ label: 'Sales', value: '1' }, { label: 'Marketing', value: '2' }, { label: 'Engineering', value: '3' }, { label: 'Human Resources', value: '4' }, { label: 'Legal', value: '5' }]
   const modalPayload = { title: 'Confirmation', content: 'Employee created!' }
+  const defaultFormObject = {
+    firstname: '',
+    lastname: '',
+    birthdate: '',
+    startdate: '',
+    street: '',
+    city: '',
+    state: '',
+    zipcode: '',
+    department: ''
+  }
+  const today = defaultDate()
   const { employees, setEmployees } = useContext(AppContext)! // eslint-disable-line
-  const [selectedBirthdate, setSelectedBirthDate] = useState<IDateOption>(defaultDate())
-  const [selectedStartDate, setSelectedStartDate] = useState<IDateOption>(defaultDate())
-  const [formData, setFormData] = useState<IFormData>(formDataTemplate)
+  const [formObject, setFormObject] = useState<IFormObject>(defaultFormObject)
+  const [selectedBirthdate, setSelectedBirthDate] = useState<IDateOption>(today)
+  const [selectedStartDate, setSelectedStartDate] = useState<IDateOption>(today)
   const [modalDisplayed, setModalDisplayed] = useState(false)
   const [selectedState, setSelectedState] = useState<IOption>(states[0])
   const [selectedDepartment, setSelectedDepartment] = useState<IOption>(departments[0])
-  const [isDPBirthdateExpanded, setIsDPBirthdateExpanded] = useState(false)
-  const [isDPStartdateExpanded, setIsDPStartdateExpanded] = useState(false)
+  const [birthDatepickerOpen, setBirthDatepickerOpen] = useState(false)
+  const [startDatepickerOpen, setStartDatepickerOpen] = useState(false)
 
   function handleInputChange (e: React.FocusEvent<HTMLInputElement, Element>): void {
     if (e.target.value.length < 1) return
-    const newFormData = { ...formData }
-    newFormData[`${e.target.id}`] = e.target.value
-    setFormData(newFormData)
+    const updatedFormObject = formObject
+    updatedFormObject[`${e.target.id}`] = e.target.value
+    setFormObject(updatedFormObject)
   }
 
   function setLocalFormObject (): void {
-    const newFormData = { ...formData }
-    newFormData.birthdate = formatDateToString(selectedBirthdate.value)
-    newFormData.startdate = formatDateToString(selectedStartDate.value)
-    newFormData.state = selectedState.value
-    newFormData.department = selectedDepartment.value
-    setFormData(newFormData)
+    const updatedFormObject = formObject
+    updatedFormObject.birthdate = formatDateToString(selectedBirthdate.value)
+    updatedFormObject.startdate = formatDateToString(selectedStartDate.value)
+    updatedFormObject.state = selectedState.value
+    updatedFormObject.department = selectedDepartment.value
+    setFormObject(updatedFormObject)
   }
 
   function handleFormSubmit (e: React.FormEvent<HTMLFormElement>): void {
     e.preventDefault()
     setLocalFormObject()
-    setModalDisplayed(true)
 
-    // ------------------- A remplacer par requête POST ------------------- //
-    // Pas de GET des employés après le POST pour respecter la consigne du projet
-
-    employees != null
-      ? setEmployees([...employees, formData])
-      : setEmployees([formData])
-
-    // ------------------------------------------------------------------- //
+    if (Object.values(formObject).some(value => value === ' ')) {
+      console.error('Missing inputs in form')
+    } else {
+      fetch('http://localhost:3001/api/v1/create-employee', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(formObject)
+      }).then(async res => await res.json())
+        .catch(() => console.log('error'))
+        .finally(() => setModalDisplayed(true))
+    }
   }
 
   return (
@@ -68,7 +81,7 @@ const CreateEmployee = (): JSX.Element => {
         <input id='firstname' type='text' required minLength={2} onChange={handleInputChange}/>
         <label htmlFor='lastname'>Last name</label>
         <input id='lastname' type='text' required minLength={2} onChange={handleInputChange}/>
-        <label id='birthdate'>Date of Birth</label>
+        <label id='birthdate' >Date of Birth</label>
         <Datepicker
         startYear={bdOptions.startYear}
         stopYear={bdOptions.stopYear}
@@ -76,8 +89,8 @@ const CreateEmployee = (): JSX.Element => {
         defaultMonth={bdOptions.defaultMonth}
         setSelectedDate={setSelectedBirthDate}
         selectedDate={selectedBirthdate}
-        isExpanded={isDPBirthdateExpanded}
-        setIsExpanded={setIsDPBirthdateExpanded}
+        isExpanded={birthDatepickerOpen}
+        setIsExpanded={setBirthDatepickerOpen}
         />
         <label id='startdate'>Start Date</label>
         <Datepicker
@@ -87,8 +100,8 @@ const CreateEmployee = (): JSX.Element => {
         defaultMonth={startOptions.defaultMonth}
         setSelectedDate={setSelectedStartDate}
         selectedDate={selectedStartDate}
-        isExpanded={isDPStartdateExpanded}
-        setIsExpanded={setIsDPStartdateExpanded}
+        isExpanded={startDatepickerOpen}
+        setIsExpanded={setStartDatepickerOpen}
         />
         <fieldset id='create-employee-form-fieldset'>
           <legend>Adress</legend>

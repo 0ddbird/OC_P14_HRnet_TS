@@ -4,24 +4,28 @@ import { Employee } from '../models/employeeModel'
 const employeeService = {
 
   async getEmployees () {
-    const sql = `SELECT
-                employees.id,
-                employees.firstname,
-                employees.lastname,
-                employees.birthdate,
-                employees.startdate,
-                employees.street,
-                employees.city,
-                employees.zipcode,
-                employees.department_id,
-                employees.state_id,
-                departments.department_name,
-                states.state
-                FROM ((employees
-                INNER JOIN departments
-                ON employees.department_id = departments.id)
-                INNER JOIN states
-                ON employees.state_id = states.id)`
+    const sql = `
+    SELECT
+    employees.employee_id,
+    employees.employee_firstname,
+    employees.employee_lastname,
+    employees.employee_birthdate,
+    employees.employee_startdate,
+    employees.employee_street,
+    employees.employee_city,
+    employees.employee_zipcode,
+    employees.employee_department,
+    employees.employee_state,
+    departments.department_name,
+    states.state_name
+    FROM
+    (
+        (
+            employees
+        INNER JOIN departments ON employees.employee_department = departments.department_id
+        )
+    INNER JOIN states ON employees.employee_state = states.state_code
+    )`
     try {
       const [rows] = await connection.promise().query(sql)
       return rows
@@ -31,26 +35,30 @@ const employeeService = {
   },
 
   async createEmployee (serviceData: Employee) {
+    console.log(serviceData)
     const sql = `INSERT INTO employees 
                  SET ?`
     const employee = {
-      id: null,
-      firstname: serviceData.firstname,
-      lastname: serviceData.lastname,
-      birthdate: serviceData.birthdate,
-      startdate: serviceData.startdate,
-      department_id: serviceData.department_id,
-      street: serviceData.street,
-      city: serviceData.city,
-      state_id: serviceData.state_id,
-      zipcode: serviceData.zipcode
+      employee_id: null,
+      employee_firstname: serviceData.firstname,
+      employee_lastname: serviceData.lastname,
+      employee_birthdate: serviceData.birthdate,
+      employee_startdate: serviceData.startdate,
+      employee_department: serviceData.department,
+      employee_street: serviceData.street,
+      employee_city: serviceData.city,
+      employee_state: serviceData.state,
+      employee_zipcode: serviceData.zipcode
     }
+    const hasEmptyValues = Object.values(serviceData).some(value => value === '')
+    if (hasEmptyValues) throw new Error('missing values')
     console.log(employee)
     try {
       const response = await connection.promise().query(sql, employee)
+      console.log('employee created in DB')
       return response
     } catch (err) {
-      return new Error('Error in employeeService')
+      throw new Error('Error in employeeService')
     }
   }
 }

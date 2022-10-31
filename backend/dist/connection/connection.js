@@ -8,7 +8,7 @@ const mysql2_1 = __importDefault(require("mysql2"));
 const connection = mysql2_1.default.createConnection({
     host: 'localhost',
     user: 'root',
-    password: 'root',
+    password: '',
     database: 'hrnet'
 });
 exports.connection = connection;

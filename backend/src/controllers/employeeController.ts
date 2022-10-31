@@ -25,12 +25,10 @@ const employeeController = {
   },
   async createEmployee (req: Request, res: Response) {
     const response: IResponse = {}
-    const serviceResponse = await employeeService.createEmployee(req.body)
-
     try {
+      await employeeService.createEmployee(req.body)
       response.status = 200
       response.message = 'Successfully created employee'
-      response.body = serviceResponse
     } catch (error: any) {
       console.error('Error in employeeController', error)
       response.status = 400

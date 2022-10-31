@@ -1,23 +1,18 @@
-/* export async function postEmployee(formData): Promise {
-  const controller = new AbortController()
-  const { signal } = controller
-  
-  const fetchParams = {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-        Accept: 'application/json'
-      },
-      body: formData,
-      signal
-    }
-    try {
-      const response = await fetch('http://localhost:3001/api/v1/create-employee', fetchParams)
-      return response.json()
-    } catch {
-      signal.aborted ? console.log('request canceled') : console.error('request failed')
-    }
 
-} */
+async function createEmployee (employeeData: any): Promise<any> {
+  const fetchPayload = {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json'
+    },
+    body: JSON.stringify(employeeData)
+  }
 
-export {}
+  const response = await fetch('http://localhost:3001/api/v1/create-employee', fetchPayload)
+  const jsonResponse = await response.json()
+
+  console.log('Promise state', jsonResponse)
+  return jsonResponse
+}
+
+export { createEmployee }
