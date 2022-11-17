@@ -25,10 +25,8 @@ export const AppContext = createContext<IAppContext | null>(null)
 
 function App (): JSX.Element {
   const [employees, setEmployees] = useState<ITableItem[] | undefined>(undefined)
-  const [isLoading, setIsLoading] = useState(true)
 
   useEffect(() => {
-    setIsLoading(true)
     const controller = new AbortController()
     const signal = controller.signal
     const fetchParams = {
@@ -43,8 +41,6 @@ function App (): JSX.Element {
       .then(async res => res.ok ? await res.json() : await Promise.reject(new Error('Request failed')))
       .then(res => setEmployees(formatEmployees(res.body)))
       .catch(() => signal.aborted ? console.log('Request aborted') : console.error('Request failed'))
-      .finally(() => setIsLoading(false))
-    console.log(isLoading)
     return () => controller.abort()
   }, [])
   return (

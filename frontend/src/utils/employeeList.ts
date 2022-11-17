@@ -18,7 +18,6 @@ interface fetchedEmployee {
 
 function formatEmployees (fetchedEmployees: fetchedEmployee[]): ITableItem[] {
   const employees: ITableItem[] = []
-  console.log(fetchedEmployees)
   fetchedEmployees.forEach(employee => {
     employees.push({
       id: employee.employee_id.toString(),
