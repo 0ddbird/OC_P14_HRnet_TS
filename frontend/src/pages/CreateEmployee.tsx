@@ -73,7 +73,7 @@ const CreateEmployee = (): JSX.Element => {
       },
       body: JSON.stringify(fetchPayload)
     }).then(async res => await res.json())
-      .catch(() => console.log('error'))
+      .catch(() => console.log("Couldn't post data to server. Server is unreachable"))
       .finally(() => {
         setModalDisplayed(true)
         dispatch({
@@ -131,7 +131,7 @@ const CreateEmployee = (): JSX.Element => {
         setIsExpanded={setStartDatepickerOpen}/>
 
         <fieldset id='create-employee-form-fieldset'>
-          <legend>Adress</legend>
+          <legend>Address</legend>
 
           <label htmlFor='street'>Street</label>
           <input id='street'

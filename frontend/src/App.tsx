@@ -38,9 +38,9 @@ function App (): JSX.Element {
       signal
     }
     fetch('http://localhost:3001/api/v1/get-employees', fetchParams)
-      .then(async res => res.ok ? await res.json() : await Promise.reject(new Error('Request failed')))
+      .then(async res => res.ok ? await res.json() : await Promise.reject(new Error('GET request failed')))
       .then(res => setEmployees(formatEmployees(res.body)))
-      .catch(() => signal.aborted ? console.log('Request aborted') : console.error('Request failed'))
+      .catch(() => signal.aborted ? console.log('GET request aborted by user') : console.error('GET request failed'))
     return () => controller.abort()
   }, [])
   return (
