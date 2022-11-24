@@ -30,14 +30,3 @@ The original app was made with 4 jQuery libraries:
 |Datepicker| homemade | TypeScript |[react-ts-datepicker](https://www.npmjs.com/package/react-ts-datepicker)| [:file_folder:](https://github.com/0ddbird/react-ts-datepicker)| Select |
 
 I made the frontend with **Typescript React**, using *Standard* ESlint guidelines and Sass for styling.
-
-I built a REST API to replace mocked data with **Typescript Node**, **Express**, **MYSQL2** and a **MySQL** database.
-
-### WIP Features
-
-- Backend data validation
-- Admin login with JWT
-- Swagger for API routes
-- Convert an *Import JSON file* module made in the first ReactJS version to TS
-- Jest tests
-- JSDoc

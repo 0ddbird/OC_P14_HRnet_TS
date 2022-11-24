@@ -1,1 +1,0 @@
-INSERT INTO `employees` (`id`, `firstname`, `lastname`, `birthdate`, `startdate`, `department_id`, `street`, `city`, `state_id`, `zipcode`) VALUES (NULL, 'Test', 'Test', '2022-10-04', '2022-10-05', '1', 'Test', 'Test', '1', 'Test');
