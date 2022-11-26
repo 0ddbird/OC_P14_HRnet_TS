@@ -1,8 +1,7 @@
-import React, { createContext, useEffect, useState } from 'react'
+import React, { createContext, useState } from 'react'
 import { BrowserRouter, Routes, Route } from 'react-router-dom'
 import { accessors } from './mocks/employees'
 import { ITableItem } from 'react-ts-table/interfaces'
-import { formatEmployees } from './utils/employeeList'
 import CreateEmployee from './pages/CreateEmployee'
 import EmployeeList from './pages/EmployeeList'
 import NotFound from './pages/NotFound'
@@ -25,24 +24,6 @@ export const AppContext = createContext<IAppContext | null>(null)
 
 function App (): JSX.Element {
   const [employees, setEmployees] = useState<ITableItem[] | undefined>(undefined)
-
-  useEffect(() => {
-    const controller = new AbortController()
-    const signal = controller.signal
-    const fetchParams = {
-      method: 'GET',
-      headers: {
-        'Content-Type': 'application/json',
-        Accept: 'application/json'
-      },
-      signal
-    }
-    fetch('http://localhost:3001/api/v1/get-employees', fetchParams)
-      .then(async res => res.ok ? await res.json() : await Promise.reject(new Error('GET request failed')))
-      .then(res => setEmployees(formatEmployees(res.body)))
-      .catch(() => signal.aborted ? console.log('GET request aborted by user') : console.error('GET request failed'))
-    return () => controller.abort()
-  }, [])
   return (
     <div className="App">
     <AppContext.Provider value={{ employees, accessors, setEmployees }}>

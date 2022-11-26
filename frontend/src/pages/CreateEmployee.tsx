@@ -47,7 +47,6 @@ const CreateEmployee = (): JSX.Element => {
       return
     }
 
-    // ------- Update App Context to meet project requirements -------
     const newEmployee: ITableItem = {
       id: `${employees !== undefined ? employees.length + 1 : 1}`,
       firstName: formState.firstname,
@@ -64,24 +63,12 @@ const CreateEmployee = (): JSX.Element => {
     }
     if (employees === undefined) setEmployees([newEmployee])
     else setEmployees([...employees, newEmployee])
-
-    // POST new employee to API
-    fetch('http://localhost:3001/api/v1/create-employee', {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json'
-      },
-      body: JSON.stringify(fetchPayload)
-    }).then(async res => await res.json())
-      .catch(() => console.log("Couldn't post data to server. Server is unreachable"))
-      .finally(() => {
-        setModalDisplayed(true)
-        dispatch({
-          type: formActionKind.CLEAR,
-          payload: '',
-          field: ''
-        })
-      })
+    setModalDisplayed(true)
+    dispatch({
+      type: formActionKind.CLEAR,
+      payload: '',
+      field: ''
+    })
   }
 
   return (
